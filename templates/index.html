@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Empresas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .resultado-header {
+        color: #007BFF; /* Cor azul */
+        font-weight: bold; /* Texto em negrito */
+        font-size: 1.5em; /* Tamanho da fonte maior */
+        margin-bottom: 10px; /* Espaçamento abaixo */
+        }
+        #resultado {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        let paginaAtual = 1;
+
+        async function consultar() {
+            const nif = document.getElementById('nif').value;
+            const nome = document.getElementById('nome').value;
+
+            const response = await fetch('/consulta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ nif, nome, pagina: 1 })
+            });
+
+            const data = await response.json();
+            document.getElementById('resultado').innerHTML = data.resultado;
+            paginaAtual = 1;  // Reinicia a página
+        }
+
+        async function mostrarMais(pagina) {
+            const nif = document.getElementById('nif').value;
+            const nome = document.getElementById('nome').value;
+
+            const response = await fetch('/consulta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ nif, nome, pagina })
+            });
+
+            const data = await response.json();
+            document.getElementById('resultado').innerHTML = data.resultado;  // Substitui o resultado atual
+            paginaAtual = pagina;  // Atualiza a página atual
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form onsubmit="event.preventDefault(); consultar();">
+            <h1>Consulta de Empresas</h1>
+            <label for="nif">NIF:</label>
+            <input type="text" id="nif" name="nif" placeholder="Digite o NIF">
+
+            <label for="nome">Nome da Empresa:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite o nome da empresa">
+
+            <button type="submit">Consultar</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+</body>
+</html>
