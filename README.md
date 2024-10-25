@@ -12,6 +12,10 @@ Este projeto é uma aplicação web para consulta de NIFs (Número de Identifica
 ## Fonte de Dados
 Os dados utilizados na aplicação são extraídos do site [Porton di Nos ilha](https://portondinosilhas.gov.cv/), que fornece informações sobre empresas em Cabo Verde.
 
+## Acesso
+
+O site está hospedado em: [https://consultar-nif-empresarial-cv-3.onrender.com/](https://consultar-nif-empresarial-cv-3.onrender.com/)
+
 ## Tecnologias Utilizadas
 - **Flask**: Micro framework em Python para desenvolvimento web.
 - **Pandas**: Biblioteca Python para manipulação e análise de dados.
